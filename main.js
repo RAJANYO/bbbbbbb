@@ -1,5 +1,6 @@
 img = "";
 Status = "";
+objects = []
 function preload() {
     img = loadImage("drawing.jpg")
 }
@@ -13,11 +14,22 @@ function setup() {
 
 function draw() {
     image(img, 0, 0, 640, 420)
-    fill("red")
-    // text("dog", 45, 75)
-    noFill()
-    stroke("red")
-    // rect(30, 60, 450, 350)
+    if (Status) {
+        document.getElementById("status").innerHTML = "Status :  Objects detected";
+
+        for (var i = 0; i < objects.length; i++) {
+
+
+            fill("red")
+            percent = floor(objects[i].confidence * 100);
+
+            text(objects[i].label+" "+percent+"%", objects[i].x+15, objects[i].y+15)
+            noFill()
+            stroke("red")
+            rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+
+        }
+    }
 }
 function modelLoaded() {
     console.log("Model Loaded!");
